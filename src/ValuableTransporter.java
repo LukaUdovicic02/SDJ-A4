@@ -2,11 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ValuableTransporter implements Runnable{
-    private Deposit<String> deposit;
+    private DepositQueue<String> deposit;
     private int amount;
     private List<String> list;
 
-    public ValuableTransporter(Deposit<String> deposit){
+    public ValuableTransporter(DepositQueue<String> deposit){
         this.deposit = deposit;
         amount = (int)(Math.random()*150+50);
         list = new ArrayList<>();

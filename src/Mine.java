@@ -1,14 +1,14 @@
 public class Mine
 {
-    private int valuable;
+    private String valuable;
 
-    public Mine(int valuable)
+    public Mine()
     {
-        this.valuable = valuable;
+        this.valuable = "Diamond";
     }
 
-    public void getValuable()
+    public String getValuable()
     {
-         valuable = 10;
+         return valuable;
     }
 }
