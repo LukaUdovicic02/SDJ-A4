@@ -1,14 +1,14 @@
 public class Mine
 {
-    private String valuable;
+    public static String[] VALUABLES = {"Diamond", "GoldNugget", "Jewel", "Ruby", "DogeCoin", "BitCoin"};
 
     public Mine()
     {
-        this.valuable = "Diamond";
+
     }
 
     public String getValuable()
     {
-         return valuable;
+         return ValuablesMultiton.getInstance(VALUABLES[(int)(Math.random()*5)]).getType();
     }
 }
