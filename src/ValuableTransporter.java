@@ -21,6 +21,11 @@ public class ValuableTransporter implements Runnable{
             }
             list.clear();
             LogSingleton.getInstance().addLog(Thread.currentThread().getName()+" emptied list");
+            try {
+                Thread.sleep(2344);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
