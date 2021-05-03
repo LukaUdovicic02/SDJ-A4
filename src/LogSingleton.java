@@ -12,8 +12,10 @@ public class LogSingleton {
     }
 
     public void addLog(String text){
-        logs.add(new LogLine(text));
-//        addToFile(logs.get(logs.size()-1));
+        LogLine line = new LogLine(text);
+        logs.add(line);
+        System.out.println(line);
+//       addToFile(logs.get(logs.size()-1));
     }
 
     public static LogSingleton getInstance(){
