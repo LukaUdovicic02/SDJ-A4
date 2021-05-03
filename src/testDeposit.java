@@ -19,18 +19,10 @@ public class testDeposit {
             }).start();
         }
 
-        int amount = (int)(Math.random()*150+50);
-        List<String> list = new ArrayList<>();
+
 
         new Thread(()->{
-            while (true) {
-                while (list.size() < amount) {
-                    String s = deposit.take();
-                    list.add(s);
-                }
-                list.clear();
-                LogSingleton.getInstance().addLog(Thread.currentThread().getName()+" emptied list");
-            }
+
         }).start();
 
     }
