@@ -13,6 +13,7 @@ public class Transporter implements Runnable{
         this.deposit = deposit;
         this.treasureRoomDoor = treasureRoomDoor;
         amount = 5;
+        // amount = (int)(Math.random()*150+50);
         list = new ArrayList<>();
     }
 
