@@ -1,18 +1,19 @@
 import logSingleton.Log;
 import treasureRoom.TreasureRoomDoor;
 import treasureRoom.TreasureRoomWrite;
+import treasureRoom.Valuables;
 import utility.collection.ArrayList;
 import utility.collection.ListADT;
 
 
 public class King implements Runnable{
 
-    private TreasureRoomDoor<String> guardsman;
-    private ListADT<String> fundsForParty;
+    private TreasureRoomDoor guardsman;
+    private ListADT<Valuables> fundsForParty;
     private boolean putBack;
     private Log log;
 
-    public King(TreasureRoomDoor<String> guardsman){
+    public King(TreasureRoomDoor guardsman){
         this.guardsman = guardsman;
         fundsForParty = new ArrayList<>();
         putBack = false;
@@ -31,7 +32,7 @@ public class King implements Runnable{
             }
             int amount = (int)(Math.random()*100+50);
 
-            TreasureRoomWrite<String> treasureRoom = guardsman.acquireWrite();
+            TreasureRoomWrite treasureRoom = guardsman.acquireWrite();
             for(int x = 0; x < amount; x++){
                 try{
                     fundsForParty.add(treasureRoom.retrieve());
@@ -52,7 +53,7 @@ public class King implements Runnable{
             }
             if(putBack){
                 for (int y = 0; y < fundsForParty.size(); y++){
-                    String valuable = fundsForParty.remove(0);
+                    Valuables valuable = fundsForParty.remove(0);
                     treasureRoom.add(valuable);
                     String txt = " Putting back valuables to treasure. Personal valuables: "+fundsForParty.size();
                     log.addLog(Thread.currentThread().getName() + txt);

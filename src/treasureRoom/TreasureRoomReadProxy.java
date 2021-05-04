@@ -2,11 +2,11 @@ package treasureRoom;
 
 import utility.collection.ListADT;
 
-public class TreasureRoomReadProxy<T> implements TreasureRoomRead<T>{
-    private TreasureRoomRead<T> treasureRoom;
+public class TreasureRoomReadProxy implements TreasureRoomRead{
+    private TreasureRoomRead treasureRoom;
     private boolean hasAccess;
 
-    public TreasureRoomReadProxy(TreasureRoomRead<T> treasureRoom){
+    public TreasureRoomReadProxy(TreasureRoomRead treasureRoom){
         this.treasureRoom = treasureRoom;
         this.hasAccess = true;
     }
@@ -16,7 +16,7 @@ public class TreasureRoomReadProxy<T> implements TreasureRoomRead<T>{
     }
 
     @Override
-    public ListADT<T> read() {
+    public ListADT<Valuables> read() {
         if (hasAccess){
             return treasureRoom.read();
         }

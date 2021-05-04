@@ -1,3 +1,5 @@
+import treasureRoom.Valuables;
+
 public class Mine
 {
     public static String[] VALUABLES = {"Diamond", "GoldNugget", "Jewel", "Ruby", "DogeCoin", "BitCoin"};
@@ -7,8 +9,8 @@ public class Mine
 
     }
 
-    public String getValuable()
+    public Valuables getValuable()
     {
-         return Valuables.getInstance(VALUABLES[(int)(Math.random()*5)]).getType();
+         return Valuables.getInstance(VALUABLES[(int)(Math.random()*5)]);
     }
 }

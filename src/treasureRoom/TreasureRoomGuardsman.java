@@ -5,16 +5,16 @@ import logSingleton.Log;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TreasureRoomGuardsman<T> implements TreasureRoomDoor<T> {
-  private TreasureRoom<T> treasureRoom;
+public class TreasureRoomGuardsman implements TreasureRoomDoor {
+  private TreasureRoom treasureRoom;
   private int readers;
   private int writers;
   private int waitingWriters;
     private Log log;
-    private Map<Thread, TreasureRoomReadProxy<T>> readProxies;
-    private Map<Thread, TreasureRoomWriteProxy<T>> writeProxies;
+    private Map<Thread, TreasureRoomReadProxy> readProxies;
+    private Map<Thread, TreasureRoomWriteProxy> writeProxies;
 
-   public TreasureRoomGuardsman(TreasureRoom<T> treasureRoom)
+   public TreasureRoomGuardsman(TreasureRoom treasureRoom)
    {
        readers = 0;
        writers = 0;
@@ -26,7 +26,7 @@ public class TreasureRoomGuardsman<T> implements TreasureRoomDoor<T> {
    }
 
     @Override
-    public synchronized TreasureRoomRead<T> acquireRead() {
+    public synchronized TreasureRoomRead acquireRead() {
         while (writers > 0 || waitingWriters > 0){
             try {
                 String txt = " waiting to get read access of the treasure room";
@@ -40,7 +40,7 @@ public class TreasureRoomGuardsman<T> implements TreasureRoomDoor<T> {
         String txt = " got read access to the treasure room";
         log.addLog(Thread.currentThread().getName()+txt);
 
-        TreasureRoomReadProxy<T> proxy = new TreasureRoomReadProxy<>(treasureRoom);
+        TreasureRoomReadProxy proxy = new TreasureRoomReadProxy(treasureRoom);
         readProxies.put(Thread.currentThread(),proxy);
         return proxy;
     }
@@ -54,7 +54,7 @@ public class TreasureRoomGuardsman<T> implements TreasureRoomDoor<T> {
             notifyAll();
         }
 
-        TreasureRoomReadProxy<T> proxy = readProxies.get(Thread.currentThread());
+        TreasureRoomReadProxy proxy = readProxies.get(Thread.currentThread());
         if (proxy != null){
             proxy.restrictAccess();
             readProxies.remove(Thread.currentThread());
@@ -62,7 +62,7 @@ public class TreasureRoomGuardsman<T> implements TreasureRoomDoor<T> {
     }
 
     @Override
-    public synchronized TreasureRoomWrite<T> acquireWrite() {
+    public synchronized TreasureRoomWrite acquireWrite() {
        waitingWriters++;
         while (writers > 0 || readers > 0){
             try {
@@ -78,7 +78,7 @@ public class TreasureRoomGuardsman<T> implements TreasureRoomDoor<T> {
         String txt = " got write access to the treasure room";
         log.addLog(Thread.currentThread().getName()+txt);
 
-        TreasureRoomWriteProxy<T> proxy = new TreasureRoomWriteProxy<>(treasureRoom);
+        TreasureRoomWriteProxy proxy = new TreasureRoomWriteProxy(treasureRoom);
         writeProxies.put(Thread.currentThread(),proxy);
         return proxy;
     }
@@ -90,26 +90,10 @@ public class TreasureRoomGuardsman<T> implements TreasureRoomDoor<T> {
         log.addLog(Thread.currentThread().getName()+txt);
         notifyAll();
 
-        TreasureRoomWriteProxy<T> proxy = writeProxies.get(Thread.currentThread());
+        TreasureRoomWriteProxy proxy = writeProxies.get(Thread.currentThread());
         if (proxy!=null){
             proxy.restrictAccess();
             writeProxies.remove(Thread.currentThread());
         }
     }
-
-
-//    @Override
-//    public void add(T element) {
-//       treasureRoom.add(element);
-//    }
-//
-//    @Override
-//    public T retrieve(T element) {
-//        return treasureRoom.retrieve(element);
-//    }
-//
-//    @Override
-//    public String look() {
-//       return treasureRoom.look();
-//    }
 }

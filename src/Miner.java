@@ -1,10 +1,10 @@
-import java.util.Random;
+import treasureRoom.Valuables;
 
 public class Miner implements Runnable{
     private Mine mine;
-    private DepositQueue<String> deposit;
+    private DepositQueue<Valuables> deposit;
 
-    public Miner(DepositQueue<String> deposit, Mine mine) {
+    public Miner(DepositQueue<Valuables> deposit, Mine mine) {
         this.deposit = deposit;
         this.mine = mine;
     }
@@ -14,7 +14,7 @@ public class Miner implements Runnable{
     {
         while(true)
         {
-            String valuable = mine.getValuable();
+            Valuables valuable = mine.getValuable();
             deposit.put(valuable);
             try {
                 Thread.sleep(200);

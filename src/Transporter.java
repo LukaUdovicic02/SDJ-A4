@@ -1,18 +1,19 @@
 import logSingleton.Log;
 import treasureRoom.TreasureRoomDoor;
 import treasureRoom.TreasureRoomWrite;
+import treasureRoom.Valuables;
 import utility.collection.ListADT;
 import utility.collection.ArrayList;
 
 
 
 public class Transporter implements Runnable{
-    private DepositQueue<String> deposit;
+    private DepositQueue<Valuables> deposit;
     private int amount;
-    private ListADT<String> list;
-    private TreasureRoomDoor<String> guardsman;
+    private ListADT<Valuables> list;
+    private TreasureRoomDoor guardsman;
 
-    public Transporter(DepositQueue<String> deposit, TreasureRoomDoor<String> guardsman){
+    public Transporter(DepositQueue<Valuables> deposit, TreasureRoomDoor guardsman){
         this.deposit = deposit;
         this.guardsman = guardsman;
 
@@ -24,19 +25,19 @@ public class Transporter implements Runnable{
         while (true) {
             amount = (int)(Math.random()*150+50);
             while (list.size() < amount) {
-                String s = deposit.take();
+                Valuables valuable = deposit.take();
                 try {
                     Thread.sleep(113);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                list.add(s);
+                list.add(valuable);
             }
-            TreasureRoomWrite<String> treasureRoom = guardsman.acquireWrite();
+            TreasureRoomWrite treasureRoom = guardsman.acquireWrite();
 //            for(int i = 0;i < list.size();i++)
             while (!list.isEmpty())
             {
-                String valuable = list.remove(0);
+                Valuables valuable = list.remove(0);
                 Log.getInstance().addLog(Thread.currentThread().getName()+" adding "+valuable+ " to the treasure room.");
                 treasureRoom.add(valuable);
                 try {

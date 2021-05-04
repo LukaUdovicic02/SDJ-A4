@@ -1,9 +1,9 @@
 package treasureRoom;
 
-public interface TreasureRoomDoor<T>
+public interface TreasureRoomDoor
 {
-  TreasureRoomRead<T> acquireRead();
+  TreasureRoomRead acquireRead();
   void releaseRead();
-  TreasureRoomWrite<T> acquireWrite();
+  TreasureRoomWrite acquireWrite();
   void releaseWrite();
 }

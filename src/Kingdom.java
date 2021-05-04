@@ -1,13 +1,14 @@
 import treasureRoom.TreasureRoom;
 import treasureRoom.TreasureRoomDoor;
 import treasureRoom.TreasureRoomGuardsman;
+import treasureRoom.Valuables;
 
 public class Kingdom {
     public static void main(String[] args) {
-        DepositQueue<String> deposit = new Deposit<>();
+        DepositQueue<Valuables> deposit = new Deposit<>();
         Mine mine = new Mine();
-        TreasureRoom<String> treasureRoom = new TreasureRoom<String>();
-        TreasureRoomDoor<String> TreasureRoomGuardsman = new TreasureRoomGuardsman<String>(treasureRoom);
+        TreasureRoom treasureRoom = new TreasureRoom();
+        TreasureRoomDoor TreasureRoomGuardsman = new TreasureRoomGuardsman(treasureRoom);
 
 
 
