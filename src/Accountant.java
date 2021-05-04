@@ -20,8 +20,6 @@ public class Accountant implements Runnable
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            int sum = 0;
-            log.addLog("Total number of valuables: " + sum);
             guard.releaseRead();
             try {
                 Thread.sleep(600);
