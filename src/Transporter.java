@@ -1,17 +1,18 @@
-import logSingleton.LogSingleton;
+import logSingleton.Log;
+import utility.collection.ListADT;
+import utility.collection.ArrayList;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class Transporter implements Runnable{
     private DepositQueue<String> deposit;
     private int amount;
-    private List<String> list;
-    private TreasureRoomDoor<String> treasureRoomDoor;
+    private ListADT<String> list;
+    private TreasureRoomDoor<String> guardsman;
 
-    public Transporter(DepositQueue<String> deposit, TreasureRoomDoor<String> treasureRoomDoor){
+    public Transporter(DepositQueue<String> deposit, TreasureRoomDoor<String> guardsman){
         this.deposit = deposit;
-        this.treasureRoomDoor = treasureRoomDoor;
+        this.guardsman = guardsman;
         amount = 5;
         // amount = (int)(Math.random()*150+50);
         list = new ArrayList<>();
@@ -24,14 +25,22 @@ public class Transporter implements Runnable{
                 String s = deposit.take();
                 list.add(s);
             }
-            System.out.println(list.toString() + "adding to vault");
-            for(int i = 0;i < list.size();i++)
+            TreasureRoomWrite<String> treasureRoom = guardsman.acquireWrite();
+//            for(int i = 0;i < list.size();i++)
+            while (!list.isEmpty())
             {
-                treasureRoomDoor.add(list.get(i));
+                String valuable = list.remove(0);
+                Log.getInstance().addLog(Thread.currentThread().getName()+" adding "+valuable+ " to the treasure room.");
+                treasureRoom.add(valuable);
+                try {
+                    Thread.sleep(213);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            list.clear();
-            System.out.println(treasureRoomDoor.look() + " IN VAULT");
-            LogSingleton.getInstance().addLog(Thread.currentThread().getName()+" emptied list");
+            Log.getInstance().addLog(Thread.currentThread().getName()+" done adding valuables to the treasure room. Count of valuables: "+treasureRoom.read());
+            guardsman.releaseWrite();
+
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {

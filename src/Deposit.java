@@ -1,15 +1,15 @@
-import logSingleton.LogSingleton;
+import logSingleton.Log;
 import utility.collection.ArrayList;
 import utility.collection.ListADT;
 
 
 public class Deposit<T> implements DepositQueue<T> {
     private ListADT<T> list;
-    private LogSingleton log;
+    private Log log;
 
     public Deposit(){
         list = new ArrayList<>();
-        log = LogSingleton.getInstance();
+        log = Log.getInstance();
     }
 
     @Override
@@ -23,14 +23,14 @@ public class Deposit<T> implements DepositQueue<T> {
     public synchronized T take() {
         while (isEmpty()){
             try {
-                log.addLog(Thread.currentThread().getName() + " waiting");
+                log.addLog(Thread.currentThread().getName() + " waiting for valuables to take from deposit");
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
         T element = list.remove(0);
-        log.addLog(Thread.currentThread().getName() + " took "+element.toString());
+        log.addLog(Thread.currentThread().getName() + " took "+element.toString()+" from deposit");
         return element;
     }
 
