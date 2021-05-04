@@ -1,12 +1,10 @@
-package treasureRoom;
-
 import utility.collection.ListADT;
 
-public class TreasureRoomWriteProxy<T> implements TreasureRoomWrite<T>{
-    private TreasureRoomWrite<T> treasureRoom;
+public class TreasureRoomWriteProxy implements TreasureRoomWrite{
+    private TreasureRoomWrite treasureRoom;
     private boolean hasAccess;
 
-    public TreasureRoomWriteProxy(TreasureRoomWrite<T> treasureRoom){
+    public TreasureRoomWriteProxy(TreasureRoomWrite treasureRoom){
         this.treasureRoom = treasureRoom;
         hasAccess = true;
     }
@@ -16,7 +14,7 @@ public class TreasureRoomWriteProxy<T> implements TreasureRoomWrite<T>{
     }
 
     @Override
-    public ListADT<T> read() {
+    public ListADT<Valuables> read() {
         if (hasAccess){
             return treasureRoom.read();
         }
@@ -24,14 +22,14 @@ public class TreasureRoomWriteProxy<T> implements TreasureRoomWrite<T>{
     }
 
     @Override
-    public void add(T element) {
+    public void add(Valuables element) {
         if (hasAccess){
             treasureRoom.add(element);
         }
     }
 
     @Override
-    public T retrieve() {
+    public Valuables retrieve() {
         if (hasAccess){
             return treasureRoom.retrieve();
         }

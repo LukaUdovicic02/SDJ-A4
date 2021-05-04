@@ -1,12 +1,10 @@
-package treasureRoom;
-
 import utility.collection.ArrayList;
 import utility.collection.ListADT;
 
 
-public class TreasureRoom<T> implements TreasureRoomWrite<T> {
+public class TreasureRoom implements TreasureRoomWrite {
 
-    private ListADT<T> valuables;
+    private ListADT<Valuables> valuables;
 
 
     public TreasureRoom() {
@@ -15,17 +13,17 @@ public class TreasureRoom<T> implements TreasureRoomWrite<T> {
     }
 
     @Override
-    public void add(T element) {
-        valuables.add(element);
+    public void add(Valuables valuable) {
+        valuables.add(valuable);
     }
 
     @Override
-    public T retrieve() {
+    public Valuables retrieve() {
         return valuables.remove(0);
     }
 
     @Override
-    public ListADT<T> read() {
+    public ListADT<Valuables> read() {
         return valuables;
     }
 }

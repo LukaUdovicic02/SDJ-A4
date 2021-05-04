@@ -1,14 +1,12 @@
 import logSingleton.Log;
-import treasureRoom.TreasureRoomDoor;
-import treasureRoom.TreasureRoomRead;
 import utility.collection.ArrayList;
 
 public class Accountant implements Runnable
 {
-   private TreasureRoomDoor<String> guard;
+   private TreasureRoomDoor guard;
    private Log log;
 
-   public Accountant(TreasureRoomDoor<String> guard)
+   public Accountant(TreasureRoomDoor guard)
    {
        this.guard = guard;
        log = Log.getInstance();
@@ -17,8 +15,8 @@ public class Accountant implements Runnable
     public void run() {
         while (true){
 
-            TreasureRoomRead<String> treasureRoom = guard.acquireRead();
-            ArrayList<String> valuables = (ArrayList<String>) treasureRoom.read();
+            TreasureRoomRead treasureRoom = guard.acquireRead();
+            ArrayList<Valuables> valuables = (ArrayList<Valuables>) treasureRoom.read();
             int count = 0;
             for (int i = 0; i < valuables.size();i++) {
                 count++;
