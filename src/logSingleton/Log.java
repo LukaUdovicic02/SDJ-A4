@@ -4,12 +4,12 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
-public class LogSingleton {
+public class Log {
     private ArrayList<LogLine> logs;
-    private static LogSingleton instance;
+    private static Log instance;
     private static Object lock = new Object();
 
-    private LogSingleton(){
+    private Log(){
         logs = new ArrayList<>();
     }
 
@@ -20,11 +20,11 @@ public class LogSingleton {
 //       addToFile(logs.get(logs.size()-1));
     }
 
-    public static LogSingleton getInstance(){
+    public static Log getInstance(){
         if (instance == null){
             synchronized (lock){
                 if (instance == null){
-                    instance = new LogSingleton();
+                    instance = new Log();
                 }
             }
         }

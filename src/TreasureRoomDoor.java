@@ -1,9 +1,7 @@
 public interface TreasureRoomDoor<T>
 {
-  TreasureRoom<T> acquireRead();
+  TreasureRoomRead<T> acquireRead();
   void releaseRead();
-  TreasureRoom<T> acquireWrite();
+  TreasureRoomWrite<T> acquireWrite();
   void releaseWrite();
-
-//acquireRead
 }
