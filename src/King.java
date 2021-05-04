@@ -1,7 +1,4 @@
 import logSingleton.Log;
-import treasureRoom.TreasureRoomDoor;
-import treasureRoom.TreasureRoomWrite;
-import treasureRoom.Valuables;
 import utility.collection.ArrayList;
 import utility.collection.ListADT;
 
@@ -32,7 +29,7 @@ public class King implements Runnable{
             }
             int amount = (int)(Math.random()*100+50);
 
-            TreasureRoomWrite treasureRoom = guardsman.acquireWrite();
+            TreasureRoomWrite treasureRoom = guardsman.acquireWrite(this);
             for(int x = 0; x < amount; x++){
                 try{
                     fundsForParty.add(treasureRoom.retrieve());
@@ -66,7 +63,7 @@ public class King implements Runnable{
                 }
             }
             putBack = false;
-            guardsman.releaseWrite();
+            guardsman.releaseWrite(this);
             if(amount == fundsForParty.size()){
                 String txt = " PARTY TIME. Personal valuables: "+fundsForParty.size();
                 log.addLog(Thread.currentThread().getName() + txt);

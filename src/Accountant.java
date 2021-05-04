@@ -1,7 +1,4 @@
 import logSingleton.Log;
-import treasureRoom.TreasureRoomDoor;
-import treasureRoom.TreasureRoomRead;
-import treasureRoom.Valuables;
 import utility.collection.ArrayList;
 
 public class Accountant implements Runnable

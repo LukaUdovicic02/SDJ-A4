@@ -1,8 +1,3 @@
-import treasureRoom.TreasureRoom;
-import treasureRoom.TreasureRoomDoor;
-import treasureRoom.TreasureRoomGuardsman;
-import treasureRoom.Valuables;
-
 public class Kingdom {
     public static void main(String[] args) {
         DepositQueue<Valuables> deposit = new Deposit<>();

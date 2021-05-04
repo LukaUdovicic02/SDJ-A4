@@ -1,5 +1,3 @@
-import treasureRoom.Valuables;
-
 public class Mine
 {
     public static String[] VALUABLES = {"Diamond", "GoldNugget", "Jewel", "Ruby", "DogeCoin", "BitCoin"};

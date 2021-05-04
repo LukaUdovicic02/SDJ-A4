@@ -1,5 +1,3 @@
-import treasureRoom.Valuables;
-
 public class Miner implements Runnable{
     private Mine mine;
     private DepositQueue<Valuables> deposit;

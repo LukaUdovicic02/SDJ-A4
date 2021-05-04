@@ -1,5 +1,3 @@
-package treasureRoom;
-
 import utility.collection.ArrayList;
 import utility.collection.ListADT;
 

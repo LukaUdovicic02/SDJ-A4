@@ -1,5 +1,3 @@
-package treasureRoom;
-
 import utility.collection.ListADT;
 
 public class TreasureRoomWriteProxy implements TreasureRoomWrite{

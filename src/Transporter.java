@@ -1,7 +1,4 @@
 import logSingleton.Log;
-import treasureRoom.TreasureRoomDoor;
-import treasureRoom.TreasureRoomWrite;
-import treasureRoom.Valuables;
 import utility.collection.ListADT;
 import utility.collection.ArrayList;
 
@@ -33,7 +30,7 @@ public class Transporter implements Runnable{
                 }
                 list.add(valuable);
             }
-            TreasureRoomWrite treasureRoom = guardsman.acquireWrite();
+            TreasureRoomWrite treasureRoom = guardsman.acquireWrite(this);
 //            for(int i = 0;i < list.size();i++)
             while (!list.isEmpty())
             {
@@ -47,7 +44,7 @@ public class Transporter implements Runnable{
                 }
             }
             Log.getInstance().addLog(Thread.currentThread().getName()+" done adding valuables to the treasure room. Count of valuables: "+treasureRoom.read().size());
-            guardsman.releaseWrite();
+            guardsman.releaseWrite(this);
 
             try {
                 Thread.sleep(5000);

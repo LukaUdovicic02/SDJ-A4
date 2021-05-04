@@ -1,5 +1,3 @@
-package treasureRoom;
-
 import logSingleton.Log;
 
 import java.util.HashMap;
@@ -24,6 +22,7 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor {
        this.treasureRoom = treasureRoom;
        log = Log.getInstance();
    }
+
 
     @Override
     public synchronized TreasureRoomRead acquireRead() {
@@ -62,38 +61,49 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor {
     }
 
     @Override
-    public synchronized TreasureRoomWrite acquireWrite() {
-       waitingWriters++;
-        while (writers > 0 || readers > 0){
-            try {
-                String txt = " waiting to get write access of the treasure room";
-                log.addLog(Thread.currentThread().getName()+txt);
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        waitingWriters--;
-        writers++;
-        String txt = " got write access to the treasure room";
-        log.addLog(Thread.currentThread().getName()+txt);
+    public synchronized TreasureRoomWrite acquireWrite(Object o) {
+       if (o instanceof King || o instanceof Transporter) {
+           waitingWriters++;
+           while (writers > 0 || readers > 0) {
+               try {
+                   String txt = " waiting to get write access of the treasure room";
+                   log.addLog(Thread.currentThread().getName() + txt);
+                   wait();
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+           }
+           waitingWriters--;
+           writers++;
+           String txt = " got write access to the treasure room";
+           log.addLog(Thread.currentThread().getName() + txt);
 
-        TreasureRoomWriteProxy proxy = new TreasureRoomWriteProxy(treasureRoom);
-        writeProxies.put(Thread.currentThread(),proxy);
-        return proxy;
+           TreasureRoomWriteProxy proxy = new TreasureRoomWriteProxy(treasureRoom);
+           writeProxies.put(Thread.currentThread(), proxy);
+           return proxy;
+       }
+       else {
+           System.err.println(o.getClass().getSimpleName() + " does not have write access");
+           return null;
+       }
     }
 
     @Override
-    public synchronized void releaseWrite() {
-        writers--;
-        String txt = " released write access of the treasure room";
-        log.addLog(Thread.currentThread().getName()+txt);
-        notifyAll();
+    public synchronized void releaseWrite(Object o) {
+        if (o instanceof King || o instanceof Transporter) {
+            writers--;
+            String txt = " released write access of the treasure room";
+            log.addLog(Thread.currentThread().getName() + txt);
+            notifyAll();
 
-        TreasureRoomWriteProxy proxy = writeProxies.get(Thread.currentThread());
-        if (proxy!=null){
-            proxy.restrictAccess();
-            writeProxies.remove(Thread.currentThread());
+            TreasureRoomWriteProxy proxy = writeProxies.get(Thread.currentThread());
+            if (proxy != null) {
+                proxy.restrictAccess();
+                writeProxies.remove(Thread.currentThread());
+            }
+        }
+        else {
+            System.err.println(o.getClass().getSimpleName() + " does not have write access");
         }
     }
 }
