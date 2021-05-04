@@ -1,4 +1,6 @@
 import logSingleton.Log;
+import treasureRoom.TreasureRoomDoor;
+import treasureRoom.TreasureRoomWrite;
 import utility.collection.ArrayList;
 import utility.collection.ListADT;
 
@@ -6,7 +8,6 @@ import utility.collection.ListADT;
 public class King implements Runnable{
 
     private TreasureRoomDoor<String> guardsman;
-    private int amount;
     private ListADT<String> fundsForParty;
     private boolean putBack;
     private Log log;
@@ -28,7 +29,7 @@ public class King implements Runnable{
             catch(InterruptedException e){
                 e.printStackTrace();
             }
-            amount = (int)(Math.random()*100+50);
+            int amount = (int)(Math.random()*100+50);
 
             TreasureRoomWrite<String> treasureRoom = guardsman.acquireWrite();
             for(int x = 0; x < amount; x++){
@@ -44,7 +45,7 @@ public class King implements Runnable{
                     break;
                 }
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

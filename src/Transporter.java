@@ -1,4 +1,6 @@
 import logSingleton.Log;
+import treasureRoom.TreasureRoomDoor;
+import treasureRoom.TreasureRoomWrite;
 import utility.collection.ListADT;
 import utility.collection.ArrayList;
 
@@ -23,6 +25,11 @@ public class Transporter implements Runnable{
             amount = (int)(Math.random()*150+50);
             while (list.size() < amount) {
                 String s = deposit.take();
+                try {
+                    Thread.sleep(113);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 list.add(s);
             }
             TreasureRoomWrite<String> treasureRoom = guardsman.acquireWrite();

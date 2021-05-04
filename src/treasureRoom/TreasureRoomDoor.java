@@ -1,3 +1,5 @@
+package treasureRoom;
+
 public interface TreasureRoomDoor<T>
 {
   TreasureRoomRead<T> acquireRead();

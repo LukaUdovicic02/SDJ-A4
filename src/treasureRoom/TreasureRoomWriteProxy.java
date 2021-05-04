@@ -1,3 +1,7 @@
+package treasureRoom;
+
+import utility.collection.ListADT;
+
 public class TreasureRoomWriteProxy<T> implements TreasureRoomWrite<T>{
     private TreasureRoomWrite<T> treasureRoom;
     private boolean hasAccess;
@@ -12,11 +16,11 @@ public class TreasureRoomWriteProxy<T> implements TreasureRoomWrite<T>{
     }
 
     @Override
-    public int read() {
+    public ListADT<T> read() {
         if (hasAccess){
             return treasureRoom.read();
         }
-        return 0;
+        return null;
     }
 
     @Override

@@ -1,5 +1,6 @@
+package treasureRoom;
+
 import logSingleton.Log;
-import utility.collection.ListADT;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class TreasureRoomGuardsman<T> implements TreasureRoomDoor<T> {
    }
 
     @Override
-    public synchronized TreasureRoomRead<T> acquireRead(/*Missing type to check who is acquiring access*/) {
+    public synchronized TreasureRoomRead<T> acquireRead() {
         while (writers > 0 || waitingWriters > 0){
             try {
                 String txt = " waiting to get read access of the treasure room";
@@ -61,7 +62,7 @@ public class TreasureRoomGuardsman<T> implements TreasureRoomDoor<T> {
     }
 
     @Override
-    public synchronized TreasureRoomWrite<T> acquireWrite(/*Missing type to check who is acquiring access*/) {
+    public synchronized TreasureRoomWrite<T> acquireWrite() {
        waitingWriters++;
         while (writers > 0 || readers > 0){
             try {

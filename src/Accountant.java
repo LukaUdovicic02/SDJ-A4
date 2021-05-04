@@ -1,9 +1,11 @@
 import logSingleton.Log;
+import treasureRoom.TreasureRoomDoor;
+import treasureRoom.TreasureRoomRead;
 import utility.collection.ArrayList;
 
 public class Accountant implements Runnable
 {
-   private  TreasureRoomDoor<String> guard;
+   private TreasureRoomDoor<String> guard;
    private Log log;
 
    public Accountant(TreasureRoomDoor<String> guard)
@@ -30,7 +32,7 @@ public class Accountant implements Runnable
             log.addLog(Thread.currentThread().getName()+txt);
             guard.releaseRead();
             try {
-                Thread.sleep(600);
+                Thread.sleep(1600);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
