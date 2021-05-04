@@ -21,8 +21,11 @@ public class ValuableTransporter implements Runnable{
                 String s = deposit.take();
                 list.add(s);
             }
-            System.out.println("ADDING TO VAULT" + list.toString());
-            treasureRoomDoor.add(list.toString());
+            System.out.println(list.toString() + "adding to vault");
+            for(int i = 0;i < list.size();i++)
+            {
+                treasureRoomDoor.add(list.get(i));
+            }
             list.clear();
             System.out.println(treasureRoomDoor.look() + " IN VAULT");
             LogSingleton.getInstance().addLog(Thread.currentThread().getName()+" emptied list");
