@@ -1,3 +1,5 @@
+import logSingleton.Log;
+
 import java.util.ArrayList;
 
 public class King implements Runnable{
@@ -6,11 +8,13 @@ public class King implements Runnable{
     private int amount;
     private ArrayList<String> fundsForParty;
     private boolean putBack;
+    private Log log;
 
     public King(TreasureRoomGuardsman<String> guardsman){
         this.guardsman = guardsman;
         fundsForParty = new ArrayList();
         putBack = false;
+        log = Log.getInstance();
     }
 
     @Override
@@ -24,14 +28,17 @@ public class King implements Runnable{
                 e.printStackTrace();
             }
             amount = (int)(Math.random()*100+50);
-            TreasureRoom<String> treasureRoom = guardsman.acquireWrite();
+            TreasureRoomWrite<String> treasureRoom = guardsman.acquireWrite();
             for(int x = 0; x < amount; x++){
                 try{
-                    //fundsForParty.add(treasureRoom.retrieve());
+                    fundsForParty.add(treasureRoom.retrieve());
+                    String txt = " Taking valuables for party";
+                    log.addLog(Thread.currentThread().getName() + txt);
                     Thread.sleep(500);
                 }
                 catch (InterruptedException e){
-                    System.out.println("Not enough funds for party");
+                    String txt = " Not enough valuables for party, no party today";
+                    log.addLog(Thread.currentThread().getName() + txt);
                     putBack = true;
                     break;
                 }
@@ -40,6 +47,8 @@ public class King implements Runnable{
                 for (int y = 0; y < fundsForParty.size(); y++){
                     treasureRoom.add(fundsForParty.get(0));
                     fundsForParty.remove(0);
+                    String txt = " Putting back valuables to treasure";
+                    log.addLog(Thread.currentThread().getName() + txt);
                     try{
                         Thread.sleep(500);
                     }
@@ -50,7 +59,16 @@ public class King implements Runnable{
             }
             guardsman.releaseWrite();
             if(amount == fundsForParty.size()){
-                System.out.println("Party time");
+                String txt = " PARTY TIME";
+                log.addLog(Thread.currentThread().getName() + txt);
+                fundsForParty.clear();
+            }
+            try
+            {
+                Thread.sleep(2000);
+            }
+            catch (InterruptedException e){
+                e.printStackTrace();
             }
         }
     }
