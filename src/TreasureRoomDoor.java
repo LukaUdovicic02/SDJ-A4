@@ -1,8 +1,9 @@
 public interface TreasureRoomDoor<T>
 {
-  void add(T element);
+  TreasureRoom<T> acquireRead();
+  void releaseRead();
+  TreasureRoom<T> acquireWrite();
+  void releaseWrite();
 
-  T retrieve(T element);
-
-  String look();
+//acquireRead
 }
