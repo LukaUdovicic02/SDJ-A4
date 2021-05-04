@@ -1,18 +1,19 @@
 import logSingleton.Log;
+import utility.collection.ArrayList;
+import utility.collection.ListADT;
 
-import java.util.ArrayList;
 
 public class King implements Runnable{
 
     private TreasureRoomDoor<String> guardsman;
     private int amount;
-    private ArrayList<String> fundsForParty;
+    private ListADT<String> fundsForParty;
     private boolean putBack;
     private Log log;
 
-    public King(TreasureRoomGuardsman<String> guardsman){
+    public King(TreasureRoomDoor<String> guardsman){
         this.guardsman = guardsman;
-        fundsForParty = new ArrayList();
+        fundsForParty = new ArrayList<>();
         putBack = false;
         log = Log.getInstance();
     }
@@ -28,26 +29,31 @@ public class King implements Runnable{
                 e.printStackTrace();
             }
             amount = (int)(Math.random()*100+50);
+
             TreasureRoomWrite<String> treasureRoom = guardsman.acquireWrite();
             for(int x = 0; x < amount; x++){
                 try{
                     fundsForParty.add(treasureRoom.retrieve());
-                    String txt = " Taking valuables for party";
+                    String txt = " Taking valuables for party. Personal valuables: "+fundsForParty.size();
                     log.addLog(Thread.currentThread().getName() + txt);
-                    Thread.sleep(500);
                 }
-                catch (InterruptedException e){
-                    String txt = " Not enough valuables for party, no party today";
+                catch (IndexOutOfBoundsException e){
+                    String txt = " Not enough valuables for party, no party today. Personal valuables: "+fundsForParty.size();
                     log.addLog(Thread.currentThread().getName() + txt);
                     putBack = true;
                     break;
                 }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             if(putBack){
                 for (int y = 0; y < fundsForParty.size(); y++){
-                    treasureRoom.add(fundsForParty.get(0));
-                    fundsForParty.remove(0);
-                    String txt = " Putting back valuables to treasure";
+                    String valuable = fundsForParty.remove(0);
+                    treasureRoom.add(valuable);
+                    String txt = " Putting back valuables to treasure. Personal valuables: "+fundsForParty.size();
                     log.addLog(Thread.currentThread().getName() + txt);
                     try{
                         Thread.sleep(500);
@@ -57,11 +63,12 @@ public class King implements Runnable{
                     }
                 }
             }
+            putBack = false;
             guardsman.releaseWrite();
             if(amount == fundsForParty.size()){
-                String txt = " PARTY TIME";
+                String txt = " PARTY TIME. Personal valuables: "+fundsForParty.size();
                 log.addLog(Thread.currentThread().getName() + txt);
-                fundsForParty.clear();
+                fundsForParty = new ArrayList<>();
             }
             try
             {

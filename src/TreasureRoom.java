@@ -1,6 +1,8 @@
 import utility.collection.ArrayList;
 import utility.collection.ListADT;
 
+import java.util.List;
+
 
 public class TreasureRoom<T> implements TreasureRoomWrite<T> {
 
@@ -23,7 +25,7 @@ public class TreasureRoom<T> implements TreasureRoomWrite<T> {
     }
 
     @Override
-    public int read() {
-        return list.size();
+    public ListADT<T> read() {
+        return list;
     }
 }

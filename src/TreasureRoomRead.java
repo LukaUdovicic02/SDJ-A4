@@ -1,3 +1,5 @@
+import utility.collection.ListADT;
+
 public interface TreasureRoomRead<T> {
-    int read();
+    ListADT<T> read();
 }

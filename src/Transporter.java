@@ -13,14 +13,14 @@ public class Transporter implements Runnable{
     public Transporter(DepositQueue<String> deposit, TreasureRoomDoor<String> guardsman){
         this.deposit = deposit;
         this.guardsman = guardsman;
-        amount = 5;
-        // amount = (int)(Math.random()*150+50);
+
         list = new ArrayList<>();
     }
 
     @Override
     public void run() {
         while (true) {
+            amount = (int)(Math.random()*150+50);
             while (list.size() < amount) {
                 String s = deposit.take();
                 list.add(s);
@@ -38,7 +38,7 @@ public class Transporter implements Runnable{
                     e.printStackTrace();
                 }
             }
-            Log.getInstance().addLog(Thread.currentThread().getName()+" done adding valuables to the treasure room. Count of valuables: "+treasureRoom.read());
+            Log.getInstance().addLog(Thread.currentThread().getName()+" done adding valuables to the treasure room. Count of valuables: "+treasureRoom.read().size());
             guardsman.releaseWrite();
 
             try {
