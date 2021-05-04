@@ -1,21 +1,21 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class ValuablesMultiton {
+public class Valuables {
     public String type;
-    private static Map<String, ValuablesMultiton> allInstances = new HashMap<>();
+    private static Map<String, Valuables> allInstances = new HashMap<>();
 
-    private ValuablesMultiton(String type){
+    private Valuables(String type){
         this.type = type;
     }
 
-    public static ValuablesMultiton getInstance(String key){
-        ValuablesMultiton instance = allInstances.get(key);
+    public static Valuables getInstance(String key){
+        Valuables instance = allInstances.get(key);
         if (instance == null){
             synchronized (allInstances){
                 instance = allInstances.get(key);
                 if (instance == null){
-                    instance = new ValuablesMultiton(key);
+                    instance = new Valuables(key);
                     allInstances.put(key, instance);
                 }
             }

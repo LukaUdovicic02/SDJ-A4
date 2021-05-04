@@ -1,10 +1,10 @@
 import java.util.Random;
 
-public class ValuablesMiner implements Runnable{
+public class Miner implements Runnable{
     private Mine mine;
     private DepositQueue<String> deposit;
 
-    public ValuablesMiner(DepositQueue<String> deposit, Mine mine) {
+    public Miner(DepositQueue<String> deposit, Mine mine) {
         this.deposit = deposit;
         this.mine = mine;
     }

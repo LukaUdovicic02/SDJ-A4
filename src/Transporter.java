@@ -1,13 +1,15 @@
+import logSingleton.LogSingleton;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValuableTransporter implements Runnable{
+public class Transporter implements Runnable{
     private DepositQueue<String> deposit;
     private int amount;
     private List<String> list;
     private TreasureRoomDoor<String> treasureRoomDoor;
 
-    public ValuableTransporter(DepositQueue<String> deposit,TreasureRoomDoor<String> treasureRoomDoor){
+    public Transporter(DepositQueue<String> deposit, TreasureRoomDoor<String> treasureRoomDoor){
         this.deposit = deposit;
         this.treasureRoomDoor = treasureRoomDoor;
         amount = 5;

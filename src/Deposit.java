@@ -1,3 +1,4 @@
+import logSingleton.LogSingleton;
 import utility.collection.ArrayList;
 import utility.collection.ListADT;
 
